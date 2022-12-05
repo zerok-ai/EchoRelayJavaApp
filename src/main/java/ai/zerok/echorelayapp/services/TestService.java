@@ -4,6 +4,8 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,12 +13,27 @@ import org.springframework.stereotype.Service;
 @Service
 public class TestService {
 
-    @Autowired
+//    @Autowired
     private EntityManager entityManager;
 
     private MongoClient mongoClient;
 
+    private void initializeMySql(){
+        //TODO: This is not working - Figure out a better solution
+        if(entityManager == null){
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("test");
+            entityManager = emf.createEntityManager();
+        }
+    }
+
+    private void initializeMongo(){
+        if(mongoClient == null){
+            mongoClient = MongoClients.create();
+        }
+    }
+
     public Object executeRawQUeryMySQL(String rawQuery) {
+        initializeMySql();
         Query query = entityManager.createNativeQuery(rawQuery);
         return query.getSingleResult();
     }
@@ -26,9 +43,7 @@ public class TestService {
 //        MongoCollection<Document> collection = database.getCollection("test1");
 //        Document myDoc = collection.find().first();
 //        System.out.println(myDoc.toJson());
-        if(mongoClient == null){
-            mongoClient = MongoClients.create();
-        }
+        initializeMongo();
         return "";
     }
 
