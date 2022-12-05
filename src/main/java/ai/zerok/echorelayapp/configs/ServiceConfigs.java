@@ -1,5 +1,6 @@
 package ai.zerok.echorelayapp.configs;
 
+import ai.zerok.echorelayapp.utils.ClassPathResourceReader;
 import ai.zerok.echorelayapp.utils.YamlPropertySourceFactory;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -39,11 +40,13 @@ public class ServiceConfigs {
 
     static {
         INSTANCE = new ServiceConfigs();
-        File file = new File(ServiceConfigs.class.getClassLoader().getResource("service.json").getFile());
+//        File file = new File(ServiceConfigs.class.getClassLoader().getResource("service.json").getFile());
         ObjectMapper mapper = new ObjectMapper();
         ServiceConfigs serviceConfigs = null;
+        String content = new ClassPathResourceReader("service.json").getContent();
         try {
-            serviceConfigs = mapper.readValue(file, ServiceConfigs.class);
+//            serviceConfigs = mapper.readValue(file, ServiceConfigs.class);
+            serviceConfigs = mapper.readValue(content, ServiceConfigs.class);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -1,6 +1,7 @@
 package ai.zerok.echorelayapp.services;
 
 import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
@@ -13,8 +14,7 @@ public class TestService {
     @Autowired
     private EntityManager entityManager;
 
-    @Autowired
-    MongoClient mongoClient;
+    private MongoClient mongoClient;
 
     public Object executeRawQUeryMySQL(String rawQuery) {
         Query query = entityManager.createNativeQuery(rawQuery);
@@ -26,7 +26,9 @@ public class TestService {
 //        MongoCollection<Document> collection = database.getCollection("test1");
 //        Document myDoc = collection.find().first();
 //        System.out.println(myDoc.toJson());
-
+        if(mongoClient == null){
+            mongoClient = MongoClients.create();
+        }
         return "";
     }
 
