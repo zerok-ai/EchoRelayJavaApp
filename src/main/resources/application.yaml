@@ -1,0 +1,17 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://127.0.0.1:27017/test
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/test
+    username: user
+    password: password
+    driver-class-name: com.mysql.jdbc.Driver
+  redis:
+    database: 0
+    host: localhost
+    port: 6379
+
+service:
+  resource: service.json
+

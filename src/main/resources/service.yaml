@@ -1,0 +1,9 @@
+name: service1
+endpoints:
+  - hello
+  - hello1
+service:
+  name: service1
+  endpoints:
+    - path: /abc/abc
+

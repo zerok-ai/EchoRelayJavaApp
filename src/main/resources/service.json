@@ -1,0 +1,64 @@
+{
+  "name": "service1",
+  "endpoints": [
+    {
+      "path": "abc",
+      "type": "API",
+      "dependents": {
+        "api1": "localhost:8080/test1",
+        "api2": "localhost:8080/test2"
+      },
+      "response": {
+        "data": {
+          "api1": "/time",
+          "api2": "/time",
+          "time": "${{date}}"
+        }
+      }
+    },
+    {
+      "path": "test1",
+      "type": "NONE",
+      "response": {
+        "data": {
+          "time": "${{date}}"
+        }
+      }
+    },
+    {
+      "path": "test2",
+      "type": "NONE",
+      "response": {
+        "data": {
+          "time": "${{date}}"
+        }
+      }
+    },
+    {
+      "path": "mysql",
+      "type": "MYSQL",
+      "dependents": {
+        "mysql": "SELECT CURDATE();"
+      },
+      "response": {
+        "data": {
+          "mysql": "",
+          "time": "${{date}}"
+        }
+      }
+    },
+    {
+      "path": "mongo",
+      "type": "MONGO",
+      "dependents": {
+        "mongo": "Date()"
+      },
+      "response": {
+        "data": {
+          "mongo": "",
+          "time": "${{date}}"
+        }
+      }
+    }
+  ]
+}
