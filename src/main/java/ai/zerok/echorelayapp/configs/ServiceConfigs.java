@@ -1,21 +1,18 @@
 package ai.zerok.echorelayapp.configs;
 
 import ai.zerok.echorelayapp.utils.ClassPathResourceReader;
-import ai.zerok.echorelayapp.utils.YamlPropertySourceFactory;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -25,9 +22,29 @@ import java.util.stream.Collectors;
 //@ConfigurationProperties(prefix = "service")
 //@PropertySource(value = "classpath:service.json")
 
+@Configuration
+@EnableConfigurationProperties
 public class ServiceConfigs {
 
     private static ServiceConfigs INSTANCE = null;
+
+    @Value("${service.resource}")
+    private String resourceName;
+
+    @PostConstruct
+    public void init() {
+        INSTANCE = this;
+        ObjectMapper mapper = new ObjectMapper();
+        ServiceConfigs serviceConfigs = null;
+        String content = new ClassPathResourceReader(resourceName).getContent();
+        try {
+            serviceConfigs = mapper.readValue(content, ServiceConfigs.class);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        INSTANCE = serviceConfigs;
+        INSTANCE.postProcess();
+    }
 
     @JsonProperty
     private String name;
@@ -37,25 +54,6 @@ public class ServiceConfigs {
 
     @JsonIgnore
     private Map<String, Endpoint> pathsToEndpoints;
-
-    static {
-        INSTANCE = new ServiceConfigs();
-//        File file = new File(ServiceConfigs.class.getClassLoader().getResource("service.json").getFile());
-        ObjectMapper mapper = new ObjectMapper();
-        ServiceConfigs serviceConfigs = null;
-        String content = new ClassPathResourceReader("service.json").getContent();
-        try {
-//            serviceConfigs = mapper.readValue(file, ServiceConfigs.class);
-            serviceConfigs = mapper.readValue(content, ServiceConfigs.class);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-//        INSTANCE.name = "service1";
-//        INSTANCE.endpoints = new ArrayList<>();
-//        INSTANCE.endpoints.add(new Endpoint("abc"));
-        INSTANCE = serviceConfigs;
-        INSTANCE.postProcess();
-    }
 
     private void postProcess() {
         if(endpoints != null){

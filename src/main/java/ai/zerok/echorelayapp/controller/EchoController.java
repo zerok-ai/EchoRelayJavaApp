@@ -19,8 +19,6 @@ import java.util.Map;
 @Controller
 public class EchoController {
 
-    private ServiceConfigs serviceConfigs = ServiceConfigs.getInstance();
-
     @Autowired
     private TestService testService;
 
@@ -29,7 +27,7 @@ public class EchoController {
     public Map api(@PathVariable String path)
     {
 
-        Endpoint endpoint = serviceConfigs.getEndpoint(path);
+        Endpoint endpoint = ServiceConfigs.getInstance().getEndpoint(path);
         if(endpoint == null){
             throw new ResourceNotFoundException();
         }

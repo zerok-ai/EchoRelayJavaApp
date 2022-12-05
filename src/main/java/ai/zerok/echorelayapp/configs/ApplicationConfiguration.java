@@ -11,6 +11,10 @@ import org.springframework.context.annotation.PropertySource;
 //@ConfigurationProperties(prefix = "service")
 public class ApplicationConfiguration {
 
-    @Value("service.resource")
-    private String resource;
+//    @Value("resource")
+//    private String resource;
+
+    @Value("${service.resource}")
+    private String serviceResource;
+
 }

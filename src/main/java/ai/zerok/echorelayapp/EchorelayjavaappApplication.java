@@ -26,9 +26,9 @@ public class EchorelayjavaappApplication {
 		SpringApplication.run(EchorelayjavaappApplication.class, args);
 	}
 
-//	@Bean
-//	public MongoClient mongoClient() {
-//		return MongoClients.create();
-//	}
+	@Bean
+	public MongoClient mongoClient() {
+		return MongoClients.create();
+	}
 
 }
