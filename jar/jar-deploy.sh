@@ -1,5 +1,6 @@
 echo "🔨  Building"
-PROJECT_DIR=$(dirname "$PWD")
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+PROJECT_DIR=$(dirname "$SCRIPT_DIR")
 echo $PROJECT_DIR
 echo
 rm -rf $PROJECT_DIR/build/libs
