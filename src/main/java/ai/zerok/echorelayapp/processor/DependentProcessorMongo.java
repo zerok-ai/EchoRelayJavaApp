@@ -10,12 +10,13 @@ import java.io.IOException;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class DependentProcessorMongo implements DependentProcessor {
+public class DependentProcessorMongo extends DependentProcessorImpl {
 
     private TestService testService;
 
     @Override
     public Object process( String key, String value) throws IOException {
-        return testService.executeRawQUeryMySQL(value);
+//        return testService.executeRawQUeryMySQL(value);
+        return null;
     }
 }

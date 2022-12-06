@@ -1,12 +1,14 @@
 package ai.zerok.echorelayapp.processor;
 
+import ai.zerok.echorelayapp.utils.QueryResultListener;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 
-public class DependentProcessorApi implements DependentProcessor {
+public class DependentProcessorApi extends DependentProcessorImpl {
 
     @Override
     public Object process(String key, String value) throws IOException {

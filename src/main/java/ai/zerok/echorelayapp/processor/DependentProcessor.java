@@ -1,5 +1,6 @@
 package ai.zerok.echorelayapp.processor;
 
+import ai.zerok.echorelayapp.utils.QueryResultListener;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.io.IOException;
