@@ -1,0 +1,15 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: svcm
+  labels:
+    app: echo-relay-java-app
+spec:
+  selector:
+    matchLabels:
+      app: echo-relay-java-app
+  endpoints:
+  - port: m-http
+    path: /metrics
+  namespaceSelector:
+    any: true

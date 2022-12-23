@@ -1,0 +1,3 @@
+[submodule "cluster/lattice"]
+	path = cluster/lattice
+	url = https://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@github.com/zerok-ai/lattice.git
