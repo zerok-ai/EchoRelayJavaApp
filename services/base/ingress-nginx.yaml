@@ -8,7 +8,7 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   rules:
-  - host: echo-relay-java-app.getanton.com
+  - host: erapp-java.getanton.com
     http:
       paths:
       - backend:

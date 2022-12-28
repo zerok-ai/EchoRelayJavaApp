@@ -3,14 +3,12 @@ kind: Deployment
 metadata:
   name: dep
   labels:
-    app: echo-relay-java-app
-    dep: default
+    app: app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: echo-relay-java-app
-      dep: default
+      app: app
   template:
     metadata:
       annotations:
@@ -18,5 +16,4 @@ spec:
         prometheus.io/scrape: "true"
         prometheus.io/port: "80"
       labels:
-        app: echo-relay-java-app
-        dep: default
+        app: app

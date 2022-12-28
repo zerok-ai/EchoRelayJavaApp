@@ -67,11 +67,11 @@ fi
 dir=${PWD}
 cd "$scriptDir/../"
 if [ "$command" = "$COMMAND_BUILD" ] ; then
-    echo "🔨  Building"
+    echo "🔨  Building the project"
     rm -rf ./build/libs
     ./gradlew build -p $PROJECT_DIR -x test
 elif [ "$command" = "$COMMAND_RUN" ]; then
-    echo "🏃  Running local"
+    echo "🏃  Running the project locally"
     java -jar ./build/libs/echorelayapp-0.0.1-SNAPSHOT.jar
 fi
 cd $dir

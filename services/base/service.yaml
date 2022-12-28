@@ -3,15 +3,13 @@ kind: Service
 metadata:
   name: svc
   labels:
-    app: echo-relay-java-app
-    dep: default
+    app: app
 spec:
   selector:
-    app: echo-relay-java-app
-    dep: default
+    app: app
   type: ClusterIP # LoadBalancer # NodePort # 
   ports:
     - protocol: TCP
       name: m-http  
       port: 80
-      targetPort: 3000
+      targetPort: 8080

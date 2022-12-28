@@ -2,21 +2,22 @@
 scriptDir=$(dirname -- "$(readlink -f -- "$BASH_SOURCE")")
 PROJECT_DIR=$(dirname "$SCRIPT_DIR")
 
-# COMMAND_CREATE='create'
-# COMMAND_UPDATE='update'
-COMMAND_INSTALL='install'
+COMMAND_BUILD='build'
 COMMAND_UPLOAD='upload'
-# COMMAND_RUN='run'
+COMMAND_INSTALL='install'
+COMMAND_DELETE='delete'
 
 CLUSTER_PROVIDER_GKE='gke'
 CLUSTER_PROVIDER_MINIKUBE='minikube'
 
 helpFunction()
 {
-    echo "Available Commands:
+    echo "Available Commands (service):
 --------------------
-    $COMMAND_INSTALL         $COMMAND_INSTALL the service
-    $COMMAND_UPLOAD         $COMMAND_UPLOAD and upload the image
+    $COMMAND_BUILD         $COMMAND_BUILD the image
+    $COMMAND_UPLOAD        $COMMAND_UPLOAD and upload the image
+    $COMMAND_INSTALL       $COMMAND_INSTALL the service
+    $COMMAND_DELETE        $COMMAND_DELETE the service
 
     -P --provider   To set the cluster provide. Allowed values - $CLUSTER_PROVIDER_GKE|$CLUSTER_PROVIDER_MINIKUBE
     -h --help       To see this help text
@@ -33,7 +34,7 @@ for arg in "$@"; do
   
     case "$arg" in
       # # command
-      $COMMAND_INSTALL)     
+      $COMMAND_BUILD | $COMMAND_UPLOAD | $COMMAND_INSTALL | $COMMAND_DELETE)     
         command="$arg"   ;;
 
       # general
@@ -80,8 +81,22 @@ if [[ -z $command ]]; then
     helpFunction;
 fi
 
-if [[ "$command" == "$COMMAND_INSTALL" ]]; then
-  sh $scriptDir/install/$CLUSTER_PROVIDER.sh 
+if [[ "$command" == "$COMMAND_BUILD" ]]; then
+  echo "⎈ building code"
+  sh $scriptDir/../gradlew build
+  
 elif [[ "$command" == "$COMMAND_UPLOAD" ]]; then
+  echo "⎈ uploading image"
   sh $scriptDir/artifact-deploy/$CLUSTER_PROVIDER.sh 
+
+elif [[ "${command}" == "$COMMAND_INSTALL" ]]; then
+  echo "⎈ installing service"
+  kubectl apply -k $scriptDir/$CLUSTER_PROVIDER
+
+elif [[ "$command" == "$COMMAND_DELETE" ]]; then
+  echo "⎈ deleting service"
+  kubectl apply -k $scriptDir/$CLUSTER_PROVIDER
+
 fi
+
+echo "✅  Done"

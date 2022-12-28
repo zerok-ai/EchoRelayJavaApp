@@ -1,0 +1,9 @@
+resources:
+  - namespace.yaml
+  - deployment.yaml
+  - service.yaml
+  - ingress-nginx.yaml
+namespace: echo-relay
+nameSuffix: -echo-relay-java
+commonLabels:
+  app: demo-app

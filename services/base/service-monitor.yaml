@@ -3,11 +3,11 @@ kind: ServiceMonitor
 metadata:
   name: svcm
   labels:
-    app: echo-relay-java-app
+    app: app
 spec:
   selector:
     matchLabels:
-      app: echo-relay-java-app
+      app: app
   endpoints:
   - port: m-http
     path: /metrics
