@@ -2,17 +2,18 @@
   "name": "service1",
   "endpoints": [
     {
-      "path": "abc",
+      "path": "aggregator",
       "type": "API",
       "dependents": {
         "api1": "localhost:8080/test1",
+        "mysql": "localhost:8080/mysql",
         "api2": "localhost:8080/test2"
       },
       "response": {
         "data": {
           "api1": "/time",
           "api2": "/time",
-          "time": "${{date}}"
+          "mysql": "/mysql"
         }
       }
     },
@@ -38,12 +39,23 @@
       "path": "mysql",
       "type": "MYSQL",
       "dependents": {
+        "mysql": "SELECT 1 as `user_id`,'Happy Singh' as `name`,'Retail' as `Dept` from DUAL;"
+      },
+      "response": {
+        "data": {
+          "mysql": ""
+        }
+      }
+    },
+    {
+      "path": "mysql1",
+      "type": "MYSQL",
+      "dependents": {
         "mysql": "SELECT CURDATE();"
       },
       "response": {
         "data": {
-          "mysql": "",
-          "time": "${{date}}"
+          "mysql": ""
         }
       }
     },

@@ -44,7 +44,6 @@ public class Endpoint {
                     responseToReturn.put(key, TimeUtils.getFormattedDate());
                 }
             }else{
-//                String[] valueRuleSplits = valueRule.split(".");
                 if(dependents != null){
                     DependentProcessor dependentProcessor = DependentProcessorFactory.getDependentProcessor(type, testService);
                     for (String dependentKey : dependents.keySet()){
@@ -57,8 +56,8 @@ public class Endpoint {
                                     responseToReturn.put(key, value);
                                     break;
                                 case MYSQL:
-                                    String mysqlResult = String.valueOf(dependentResponse);
-                                    responseToReturn.put(key, mysqlResult);
+//                                    String mysqlResult = String.valueOf(dependentResponse);
+                                    responseToReturn.put(key, dependentResponse);
                                     break;
                             }
                         } catch (JsonProcessingException e) {

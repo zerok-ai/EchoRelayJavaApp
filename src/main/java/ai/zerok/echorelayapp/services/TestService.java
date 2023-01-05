@@ -9,17 +9,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
-import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Service;
 
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class TestService {
 
-//    @Autowired
+    //    @Autowired
 //    private EntityManager entityManager;
     private JdbcTemplate jdbcTemplate;
 
@@ -31,10 +35,10 @@ public class TestService {
     @Autowired
     private DatasourceConfig datasourceConfig;
 
-    private void initializeMySql(){
+    private void initializeMySql() {
         //TODO: This is not working - Figure out a better solution
         //https://stackoverflow.com/a/46499472/4666116
-        if(jdbcTemplate == null){
+        if (jdbcTemplate == null) {
             DriverManagerDataSource dataSource = new DriverManagerDataSource();
             dataSource.setDriverClassName(datasourceConfig.getDriver());
             dataSource.setUrl(datasourceConfig.getUrl());
@@ -46,27 +50,33 @@ public class TestService {
         }
     }
 
-    private void initializeMongo(){
-        if(mongoClient == null){
+    private void initializeMongo() {
+        if (mongoClient == null) {
             mongoClient = MongoClients.create();
         }
     }
 
     public Object executeRawQUeryMySQL(String rawQuery, QueryResultListener queryResultListener) {
         initializeMySql();
-        String result = jdbcTemplate.query(rawQuery, new ResultSetExtractor<String>() {
+        List result = jdbcTemplate.query(rawQuery, new ResultSetExtractor<List>() {
             @Override
-            public String extractData(ResultSet rs) throws SQLException, DataAccessException {
-                if(rs.next()){
-                    return rs.getString(1);
+            public List extractData(ResultSet rs) throws SQLException, DataAccessException {
+                List<Object> resultList = new ArrayList<>();
+                ResultSetMetaData resultSetMetaData = rs.getMetaData();
+                //getting the column type
+                int column_count = resultSetMetaData.getColumnCount();
+                while (rs.next()) {
+                    Map<String, Object> rowData = new HashMap<>();
+                    for (int columnIndex = 1; columnIndex <= column_count; columnIndex++) {
+                        rowData.put(resultSetMetaData.getColumnName(columnIndex), rs.getString(columnIndex));
+                    }
+                    resultList.add(rowData);
                 }
-                return null;
+                return resultList;
             }
         });
 
         return result;
-//        Query query = entityManager.createNativeQuery(rawQuery);
-//        return query.getSingleResult();
     }
 
     public Object executeRawQUeryMongo(String database, String rawQuery) {
