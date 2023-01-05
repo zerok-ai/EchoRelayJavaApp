@@ -1,25 +1,25 @@
 # EchoRelayJavaApp
 
-```
-alias actl=./antonctl.sh
+```sh
+alias ectl=./echoctl.sh
 ```
 
 ## Create cluster
-```
-actl cluster create
+```sh
+ectl cluster create
 ```
 
 ## Install addons
 
 ```sh
-# Promethus and grafana
-actl cluster install prometheus-grafana
+# Prometheus and grafana
+ectl cluster install prometheus-grafana
 
 # nginx Ingress
-actl cluster install ingress
+ectl cluster install ingress
 
 # mysql
-actl cluster install mysql
+ectl cluster install mysql
 
 ```
 
@@ -32,23 +32,23 @@ TBD
 ### Build code
 
 ```sh
-actl svc build
+ectl svc build
 ```
 
 ### Upload image of the code to artifact repo
 
 ```sh
-actl svc upload
+ectl svc upload
 ```
 
-### Inatall the service on kubernetes cluster
+### Install the service on kubernetes cluster
 
 ```sh
-actl svc install
+ectl svc install
 ```
 
 ## Set DNS
 
-```
-actl cluster update dns
+```sh
+ectl cluster update dns
 ```
