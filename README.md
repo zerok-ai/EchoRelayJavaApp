@@ -4,32 +4,9 @@
 alias ectl=./echoctl.sh
 ```
 
-## Create cluster
-```sh
-ectl cluster create
-```
+## Code
 
-## Install addons
-
-```sh
-# Prometheus and grafana
-ectl cluster install prometheus-grafana
-
-# nginx Ingress
-ectl cluster install ingress
-
-# mysql
-ectl cluster install mysql
-
-```
-
-### Configure mysql
-
-TBD
-
-## Install service
-
-### Build code
+### Build 
 
 ```sh
 ectl svc build
@@ -41,10 +18,27 @@ ectl svc build
 ectl svc upload
 ```
 
-### Install the service on kubernetes cluster
+## Create cluster
 
 ```sh
+ectl cluster create
+```
+
+## Install addons and service
+
+```sh
+# Prometheus and grafana
+ectl cluster install prometheus-grafana
+
+# nginx Ingress
+ectl cluster install ingress
+
+# mysql
+ectl cluster install mysql
+
+# Install the service components on kubernetes cluster
 ectl svc install
+
 ```
 
 ## Set DNS

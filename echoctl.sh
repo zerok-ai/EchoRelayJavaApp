@@ -79,7 +79,7 @@ fi
 if [[ "${resource}" == "$RESOURCE_CODE" ]]; then
   sh ./code/setup.sh "${arguments[@]}"
 elif [[ "${resource}" == "$RESOURCE_SERVICE" ]]; then
-  sh ./services/setup.sh "${arguments[@]}"
+  sh ./services/setup.sh "${arguments[@]}" -P "gke"
 elif [[ "${resource}" == "${RESOURCE_CLUSTER}" ]]; then
   sh ./cluster/lattice/install.sh -c ./cluster/constants.properties -s ./cluster/stages.properties -l ./cluster/constants.local "${arguments[@]}"
 fi
