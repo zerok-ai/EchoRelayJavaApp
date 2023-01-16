@@ -32,11 +32,11 @@ for arg in "$@"; do
     case "$arg" in
 
       # resources
-      $RESOURCE_CLUSTER_SHORT | $RESOURCE_CLUSTER)  
+      "$RESOURCE_CLUSTER_SHORT" | "$RESOURCE_CLUSTER")
         resource=$RESOURCE_CLUSTER ;;
-      $RESOURCE_SERVICE_SHORT | $RESOURCE_SERVICE)  
+      "$RESOURCE_SERVICE_SHORT" | "$RESOURCE_SERVICE")
         resource=$RESOURCE_SERVICE ;;
-      $RESOURCE_CODE_SHORT | $RESOURCE_CODE)     
+      "$RESOURCE_CODE_SHORT" | "$RESOURCE_CODE")
         resource=$RESOURCE_CODE ;;
 
       # general
@@ -66,7 +66,7 @@ while getopts "h" opt
 do
   case "$opt" in
     * )       
-      helpFunction "$command" "$OPTARG" 
+      helpFunction "$command" "$OPTARG"
     ;; 
   esac
 done
@@ -76,10 +76,10 @@ if [[ -z $resource ]]; then
     helpFunction
 fi
 
-if [[ "$resource" == "$RESOURCE_CODE" ]]; then
-  sh ./code/setup.sh ${arguments[@]}
-elif [[ "$resource" == "$RESOURCE_SERVICE" ]]; then
-  sh ./services/setup.sh ${arguments[@]}
-elif [[ "$resource" == "$RESOURCE_CLUSTER" ]]; then
-  sh ./cluster/lattice/install.sh -c ./cluster/constants.properties -s ./cluster/stages.properties -l ./cluster/constants.local ${arguments[@]}
+if [[ "${resource}" == "$RESOURCE_CODE" ]]; then
+  sh ./code/setup.sh "${arguments[@]}"
+elif [[ "${resource}" == "$RESOURCE_SERVICE" ]]; then
+  sh ./services/setup.sh "${arguments[@]}"
+elif [[ "${resource}" == "${RESOURCE_CLUSTER}" ]]; then
+  sh ./cluster/lattice/install.sh -c ./cluster/constants.properties -s ./cluster/stages.properties -l ./cluster/constants.local "${arguments[@]}"
 fi
