@@ -13,3 +13,4 @@ gcloud auth configure-docker $LOCATION-docker.pkg.dev
 
 echo "🖼️  Pushing image to gke. This will take time..."
 docker push $ART_Repo_URI
+
