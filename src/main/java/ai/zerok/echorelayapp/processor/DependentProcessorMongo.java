@@ -16,7 +16,6 @@ public class DependentProcessorMongo extends DependentProcessorImpl {
 
     @Override
     public Object process( String key, String value) throws IOException {
-//        return testService.executeRawQUeryMySQL(value);
-        return null;
+        return testService.executeRawQueryMongo();
     }
 }

@@ -56,6 +56,7 @@ public class Endpoint {
                                     responseToReturn.put(key, value);
                                     break;
                                 case MYSQL:
+                                case MONGO:
 //                                    String mysqlResult = String.valueOf(dependentResponse);
                                     responseToReturn.put(key, dependentResponse);
                                     break;

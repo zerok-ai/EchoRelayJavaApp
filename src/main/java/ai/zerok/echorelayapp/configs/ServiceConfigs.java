@@ -1,17 +1,15 @@
 package ai.zerok.echorelayapp.configs;
 
-import ai.zerok.echorelayapp.utils.ClassPathResourceReader;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -28,15 +26,17 @@ public class ServiceConfigs {
 
     private static ServiceConfigs INSTANCE = null;
 
-    @Value("${service.resource}")
-    private String resourceName;
+    private final String CONF_FILE = "CONF_FILE";
 
     @PostConstruct
-    public void init() {
+    public void init() throws IOException {
         INSTANCE = this;
         ObjectMapper mapper = new ObjectMapper();
         ServiceConfigs serviceConfigs = null;
-        String content = new ClassPathResourceReader(resourceName).getContent();
+        String filePath = System.getenv(CONF_FILE);
+        Path fileName = Path.of(filePath);
+        String content = Files.readString(fileName);
+
         try {
             serviceConfigs = mapper.readValue(content, ServiceConfigs.class);
         } catch (IOException e) {
