@@ -5,15 +5,17 @@
       "path": "aggregator",
       "type": "API",
       "dependents": {
-        "api1": "localhost:8080/test1",
-        "mysql": "localhost:8080/mysql",
-        "api2": "localhost:8080/test2"
+        "api1": "localhost:80/test1",
+        "mysql": "localhost:80/mysql",
+        "api2": "localhost:80/test2",
+        "mongo": "localhost:80/mongo"
       },
       "response": {
         "data": {
           "api1": "/time",
           "api2": "/time",
-          "mysql": "/mysql"
+          "mysql": "/mysql",
+          "mongo": "/mongo"
         }
       }
     },

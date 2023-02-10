@@ -33,6 +33,7 @@ public class ServiceConfigs {
         INSTANCE = this;
         ObjectMapper mapper = new ObjectMapper();
         ServiceConfigs serviceConfigs = null;
+//        String filePath = "/Users/vaibhavpaharia/service.json";
         String filePath = System.getenv(CONF_FILE);
         Path fileName = Path.of(filePath);
         String content = Files.readString(fileName);
