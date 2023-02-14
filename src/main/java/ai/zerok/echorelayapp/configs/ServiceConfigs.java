@@ -42,14 +42,17 @@ public class ServiceConfigs {
         INSTANCE = this;
         ObjectMapper mapper = new ObjectMapper();
         ServiceConfigs serviceConfigs = new ServiceConfigs();
-        String filePath = "/Users/vaibhavpaharia/ok/EchoRelayJavaApp/src/main/resources/service1-definition.yaml";
-//        String filePath = System.getenv(ENV_CONF_FILE);
+//        String filePath = "/Users/vaibhavpaharia/ok/EchoRelayJavaApp/src/main/resources/service-definition.yaml";
+        String filePath = System.getenv(ENV_CONF_FILE);
 
         String content = new Scanner(new File(filePath)).useDelimiter("\\Z").next();
 //        System.out.println(content);
         String[] s = content.split("---");
 
         for (String item : s) {
+            if (item.contains("#")) {
+                continue;
+            }
             String jsonPath = "$.kind";
             String jsonString = convertYamlToJson(item);
 
@@ -106,8 +109,8 @@ public class ServiceConfigs {
             System.err.println("File is created!");
         }
 
-//        String source = System.getenv(ENV_CONF_FILE);
-        String source = "/Users/vaibhavpaharia/ok/EchoRelayJavaApp/src/main/resources/service1-definition.yaml";
+        String source = System.getenv(ENV_CONF_FILE);
+//        String source = "/Users/vaibhavpaharia/ok/EchoRelayJavaApp/src/main/resources/service1-definition.yaml";
         FileChannel src = new FileInputStream(source).getChannel();
         FileChannel dest = new FileOutputStream(destination).getChannel();
         dest.transferFrom(src, 0, src.size());
