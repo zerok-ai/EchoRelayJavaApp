@@ -1,6 +1,5 @@
 package ai.zerok.echorelayapp.services;
 
-import ai.zerok.echorelayapp.configs.ApplicationConfiguration;
 import ai.zerok.echorelayapp.configs.DatasourceConfig;
 import ai.zerok.echorelayapp.utils.QueryResultListener;
 import com.mongodb.client.MongoClient;
@@ -33,14 +32,10 @@ public class TestService {
     private MongoClient mongoClient;
 
     @Autowired
-    private ApplicationConfiguration applicationConfiguration;
-
-    @Autowired
     private DatasourceConfig datasourceConfig;
 
     private void initializeMySql() {
         //TODO: This is not working - Figure out a better solution
-        //https://stackoverflow.com/a/46499472/4666116
         if (jdbcTemplate == null) {
             DriverManagerDataSource dataSource = new DriverManagerDataSource();
             dataSource.setDriverClassName(datasourceConfig.getDriver());
@@ -48,8 +43,6 @@ public class TestService {
             dataSource.setUsername(datasourceConfig.getUser());
             dataSource.setPassword(datasourceConfig.getPassword());
             jdbcTemplate = new JdbcTemplate(dataSource);
-//            EntityManagerFactory emf = Persistence.createEntityManagerFactory("test");
-//            entityManager = emf.createEntityManager();
         }
     }
 
@@ -97,10 +90,6 @@ public class TestService {
 
         MongoDatabase database = mongoClient.getDatabase(datasourceConfig.getMongoDatabase());
         MongoCollection<Document> collection = database.getCollection("sampleCollection");
-        Document myDoc = collection.find().first();
-        if (myDoc != null) {
-           System.out.println(myDoc.toJson());
-        }
-        return myDoc;
+        return collection.find().first();
     }
 }

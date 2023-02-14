@@ -15,7 +15,7 @@ public class DependentProcessorMongo extends DependentProcessorImpl {
     private TestService testService;
 
     @Override
-    public Object process( String key, String value) throws IOException {
+    public Object process() throws IOException {
         return testService.executeRawQueryMongo();
     }
 }

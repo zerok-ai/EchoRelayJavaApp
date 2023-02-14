@@ -21,6 +21,9 @@ repositories {
 }
 
 dependencies {
+	implementation 'com.jayway.jsonpath:json-path:2.7.0'
+	implementation 'org.yaml:snakeyaml:1.33'
+	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.14.2'
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'org.springframework.boot:spring-boot-starter-web'

@@ -1,17 +1,22 @@
 package ai.zerok.echorelayapp.processor;
 
-import ai.zerok.echorelayapp.configs.DependentType;
+import ai.zerok.echorelayapp.configs.Dependents;
 import ai.zerok.echorelayapp.services.TestService;
 
 public class DependentProcessorFactory {
 
-    public static DependentProcessor getDependentProcessor(DependentType dependentType, Object... params){
+    public static DependentProcessor getDependentProcessor(Dependents dependent, TestService testService){
         DependentProcessor dependentProcessor = new DependentProcessorApi();
-        switch (dependentType){
-            case API -> dependentProcessor = new DependentProcessorApi();
-            case NONE -> dependentProcessor = new DependentProcessorApi();
-            case MYSQL -> dependentProcessor = new DependentProcessorMySql((TestService) params[0]);
-            case MONGO -> dependentProcessor = new DependentProcessorMongo((TestService) params[0]);
+        if (dependent.containsKey("path")) {
+            String path = dependent.get("path");
+            return new DependentProcessorApi(path);
+        } else if  (dependent.containsKey("kind")) {
+            if (dependent.get("name").equals("mysqlConn")) {
+                String query = dependent.get("query");
+                return new DependentProcessorMySql(testService, query);
+            } else if (dependent.get("name").equals("mongoConn")) {
+                return new DependentProcessorMongo(testService);
+            }
         }
 
         return dependentProcessor;

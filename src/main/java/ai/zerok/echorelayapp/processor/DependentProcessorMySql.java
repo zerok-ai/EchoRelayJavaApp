@@ -14,8 +14,10 @@ public class DependentProcessorMySql extends DependentProcessorImpl {
 
     private TestService testService;
 
+    private String value;
+
     @Override
-    public Object process( String key, String value) throws IOException {
+    public Object process() throws IOException {
         return testService.executeRawQueryMySQL(value, null);
     }
 
