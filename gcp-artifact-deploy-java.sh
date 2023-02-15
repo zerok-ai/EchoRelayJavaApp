@@ -1,7 +1,7 @@
 LOCATION="us-west1"
 PROJECT_ID="zerok-dev"
 REPOSITORY="multi-tier-app"
-IMAGE="echo-relay-java-1"
+IMAGE="echo-relay-java"
 TAG="latest"
 ART_Repo_URI="$LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE:$TAG"
 
