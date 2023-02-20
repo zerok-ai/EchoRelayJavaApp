@@ -14,24 +14,40 @@ import org.springframework.context.annotation.Configuration;
 @AllArgsConstructor
 public class DatasourceConfig {
 
-//    spring.datasource.url=jdbc:mysql://127.0.0.1:3306/test?serverTimezone=UTC
+    //    spring.datasource.url=jdbc:mysql://127.0.0.1:3306/test?serverTimezone=UTC
     @Value("${spring.datasource.url}")
     private String url;
 
-//    spring.datasource.username=user
+    //    spring.datasource.username=user
     @Value("${spring.datasource.username}")
     private String user;
 
-//    spring.datasource.password=password
+    //    spring.datasource.password=password
     @Value("${spring.datasource.password}")
     private String password;
 
-//    spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5Dialect
+    //    spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5Dialect
     @Value("${spring.jpa.properties.hibernate.dialect}")
     private String dialect;
 
-//    spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5Dialect
+    //    spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5Dialect
     @Value("${spring.datasource.driverClassName}")
     private String driver;
+
+    //  spring.data.mongodb.database
+    @Value("${spring.data.mongodb.database}")
+    private String mongoDatabase;
+
+    //   spring.data.mongodb.port
+    @Value("${spring.data.mongodb.port}")
+    private int mongoPort;
+
+    //   spring.data.mongodb.host
+    @Value("${spring.data.mongodb.host}")
+    private String mongoHost;
+
+    // spring.data.mongodb.uri
+    @Value("${spring.data.mongodb.uri}")
+    private String monoguri;
 
 }

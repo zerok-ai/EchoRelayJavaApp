@@ -1,8 +1,6 @@
 package ai.zerok.echorelayapp.processor;
 
 import ai.zerok.echorelayapp.services.TestService;
-import ai.zerok.echorelayapp.utils.QueryResultListener;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,9 +14,11 @@ public class DependentProcessorMySql extends DependentProcessorImpl {
 
     private TestService testService;
 
+    private String value;
+
     @Override
-    public Object process( String key, String value) throws IOException {
-        return testService.executeRawQUeryMySQL(value, null);
+    public Object process() throws IOException {
+        return testService.executeRawQueryMySQL(value, null);
     }
 
 }

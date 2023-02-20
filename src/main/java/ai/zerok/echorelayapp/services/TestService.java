@@ -1,10 +1,12 @@
 package ai.zerok.echorelayapp.services;
 
-import ai.zerok.echorelayapp.configs.ApplicationConfiguration;
 import ai.zerok.echorelayapp.configs.DatasourceConfig;
 import ai.zerok.echorelayapp.utils.QueryResultListener;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -30,14 +32,10 @@ public class TestService {
     private MongoClient mongoClient;
 
     @Autowired
-    private ApplicationConfiguration applicationConfiguration;
-
-    @Autowired
     private DatasourceConfig datasourceConfig;
 
     private void initializeMySql() {
         //TODO: This is not working - Figure out a better solution
-        //https://stackoverflow.com/a/46499472/4666116
         if (jdbcTemplate == null) {
             DriverManagerDataSource dataSource = new DriverManagerDataSource();
             dataSource.setDriverClassName(datasourceConfig.getDriver());
@@ -45,18 +43,26 @@ public class TestService {
             dataSource.setUsername(datasourceConfig.getUser());
             dataSource.setPassword(datasourceConfig.getPassword());
             jdbcTemplate = new JdbcTemplate(dataSource);
-//            EntityManagerFactory emf = Persistence.createEntityManagerFactory("test");
-//            entityManager = emf.createEntityManager();
         }
     }
 
     private void initializeMongo() {
         if (mongoClient == null) {
-            mongoClient = MongoClients.create();
+            mongoClient = MongoClients.create(datasourceConfig.getMonoguri());
+            MongoDatabase database = mongoClient.getDatabase(datasourceConfig.getMongoDatabase());
+            MongoCollection<Document> collection = database.getCollection("sampleCollection");
+
+            Document document = new Document("title", "MongoDB")
+                    .append("description", "database")
+                    .append("likes", 100)
+                    .append("url", "http://www.tutorialspoint.com/mongodb/")
+                    .append("by", "tutorials point");
+
+            collection.insertOne(document);
         }
     }
 
-    public Object executeRawQUeryMySQL(String rawQuery, QueryResultListener queryResultListener) {
+    public Object executeRawQueryMySQL(String rawQuery, QueryResultListener queryResultListener) {
         initializeMySql();
         List result = jdbcTemplate.query(rawQuery, new ResultSetExtractor<List>() {
             @Override
@@ -79,13 +85,11 @@ public class TestService {
         return result;
     }
 
-    public Object executeRawQUeryMongo(String database, String rawQuery) {
-//        MongoDatabase database = mongoClient.getDatabase("test");
-//        MongoCollection<Document> collection = database.getCollection("test1");
-//        Document myDoc = collection.find().first();
-//        System.out.println(myDoc.toJson());
+    public Object executeRawQueryMongo() {
         initializeMongo();
-        return "";
-    }
 
+        MongoDatabase database = mongoClient.getDatabase(datasourceConfig.getMongoDatabase());
+        MongoCollection<Document> collection = database.getCollection("sampleCollection");
+        return collection.find().first();
+    }
 }
