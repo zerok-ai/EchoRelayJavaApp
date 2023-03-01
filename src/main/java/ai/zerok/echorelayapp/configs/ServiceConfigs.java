@@ -42,8 +42,8 @@ public class ServiceConfigs {
         INSTANCE = this;
         ObjectMapper mapper = new ObjectMapper();
         ServiceConfigs serviceConfigs = new ServiceConfigs();
-//        String filePath = "/Users/vaibhavpaharia/ok/EchoRelayJavaApp/src/main/resources/service-definition.yaml";
-        String filePath = System.getenv(ENV_CONF_FILE);
+        String filePath = "/Users/avin/workspace/zerok/EchoRelayJavaApp/src/main/resources/service-definition.yaml";
+//        String filePath = System.getenv(ENV_CONF_FILE);
 
         String content = new Scanner(new File(filePath)).useDelimiter("\\Z").next();
 //        System.out.println(content);
